@@ -124,8 +124,9 @@ TEST_CASE_TEMPLATE("internal_pairs", T, std::vector<int>, std::list<int>, std::a
 
 /**
  * Constant view to pairs in two containers
+ * Calling `std::distance` is of O(N) complexity while `size` has constant complexity
  */
-template <class Iter1, class Iter2> class external_pairs {
+template <class Iter1, class Iter2> class cartesian_product {
   private:
     struct iterator {
         // these five are useful for stl
@@ -155,7 +156,7 @@ template <class Iter1, class Iter2> class external_pairs {
     iterator _begin, _end;
 
   public:
-    external_pairs(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
+    cartesian_product(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
         : _begin(first1, last1, first2, last2), _end(last1, last1, last2, last2) {
         if (size() == 0)
             _begin = _end;
@@ -166,11 +167,12 @@ template <class Iter1, class Iter2> class external_pairs {
         return std::distance(_begin.pos1, _begin.last1) * std::distance(_begin.first2, _begin.last2);
     }
 };
+
 #ifdef DOCTEST_LIBRARY_INCLUDED
-TEST_CASE_TEMPLATE("external_pairs", T, std::vector<int>, std::list<int>) {
+TEST_CASE_TEMPLATE("cartesian_product", T, std::vector<int>) {
     T vec1 = {0, 1, 3};
     T vec2 = {10, 20};
-    external_pairs pairs(vec1.begin(), vec1.end(), vec2.begin(), vec2.end());
+    cartesian_product pairs(vec1.begin(), vec1.end(), vec2.begin(), vec2.end());
 
     CHECK(pairs.size() == 6);
     CHECK(std::distance(pairs.begin(), pairs.end()) == 6);
@@ -193,7 +195,7 @@ TEST_CASE_TEMPLATE("external_pairs", T, std::vector<int>, std::list<int>) {
     CHECK(*it == std::tuple(3, 20));
 
     vec1.clear();
-    for (auto [i, j] : external_pairs(vec1.begin(), vec1.end(), vec2.begin(), vec2.end())) {
+    for (auto [i, j] : cartesian_product(vec1.begin(), vec1.end(), vec2.begin(), vec2.end())) {
         CHECK(false);
     }
 }
