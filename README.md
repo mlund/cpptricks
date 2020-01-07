@@ -11,8 +11,8 @@ make test
 
 ## `pairwise_iterator.h`
 
-This generates an iterateable object (begin, end) to all unique
-pairs in one or between two containers. Deferenrencing the iterator
+This generates an iterable object pointing to all _unique_
+pairs in one container or between two containers. Dereferencing the iterator
 returns a `std::tuple` holding (const) references to the underlying
 data.
 
