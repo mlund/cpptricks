@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020  Mikael Lund (github.com/mlund/cpptricks)
+ *  Copyright (C) 2020-present  Mikael Lund (github.com/mlund/cpptricks)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -224,7 +224,7 @@ TEST_CASE_TEMPLATE("cartesian_product", T, std::vector<int>) {
     CHECK(*it == std::tuple(3, 20));
 
     vec1.clear();
-    for (auto [i, j] : cartesian_product(vec1.begin(), vec1.end(), vec2.begin(), vec2.end())) {
+    for (auto [i,j] : cartesian_product(vec1.begin(), vec1.end(), vec2.begin(), vec2.end())) {
         CHECK(false);
     }
 }

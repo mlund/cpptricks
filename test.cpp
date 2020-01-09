@@ -12,7 +12,9 @@
 #include <array>
 #include <set>
 #include <numeric>
+#include <cmath>
 #include <range/v3/all.hpp>
 
 #include "pairwise_iterator.h"
+#include "invsqrt.h"
 
