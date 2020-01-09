@@ -8,6 +8,18 @@ set(CMAKE_CXX_EXTENSIONS NO)
 
 include(FetchContent)
 
+# fetch range-v3
+FetchContent_Declare(
+    rangev3
+    URL "https://github.com/ericniebler/range-v3/archive/0.10.0.tar.gz"
+    URL_HASH MD5=2a68ca385f70d62398365cc2923d0573)
+
+FetchContent_GetProperties(rangev3)
+if(NOT rangev3_POPULATED)
+    FetchContent_Populate(rangev3)
+endif()
+
+
 # fetch doctest
 FetchContent_Declare(
     doctest
@@ -18,7 +30,7 @@ if(NOT doctest_POPULATED)
     FetchContent_Populate(doctest)
     add_definitions(-DDOCTEST_CONFIG_DISABLE)
 endif()
-include_directories(SYSTEM ${doctest_SOURCE_DIR})
+include_directories(SYSTEM ${doctest_SOURCE_DIR} ${rangev3_SOURCE_DIR}/include)
 
 set(hdrs
     ${CMAKE_SOURCE_DIR}/pairwise_iterator.h)

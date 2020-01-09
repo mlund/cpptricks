@@ -12,6 +12,7 @@
 #include <array>
 #include <set>
 #include <numeric>
+#include <range/v3/all.hpp>
 
 #include "pairwise_iterator.h"
 

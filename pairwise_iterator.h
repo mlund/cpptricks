@@ -122,6 +122,35 @@ TEST_CASE_TEMPLATE("internal_pairs", T, std::vector<int>, std::list<int>, std::a
 }
 #endif
 
+#ifdef RANGES_V3_VIEW_ZIP_HPP
+#ifdef DOCTEST_LIBRARY_INCLUDED
+TEST_CASE("internal_pairs_index") {
+    // we can also generate all the indexes for a e.g. a random access container
+    // @todo wrap in function - solve dangling references...
+    using namespace ranges;
+    int n = 4; // size of target container
+    auto i = views::for_each(views::ints(0, n > 0 ? n - 1 : 0), [&](auto i) { return yield_from(views::repeat_n(i, n - 1 - i)); });
+    auto j = views::ints(0, n > 0 ? n - 1 : 0) | views::for_each([&](auto i) { return views::ints(i + 1, n); });
+    auto pairs = views::zip(i, j);
+
+    CHECK(ranges::distance(pairs.begin(), pairs.end()) == 6);
+
+    auto it = pairs.begin();
+    CHECK(*it == std::pair(0, 1));
+    it.operator++();
+    CHECK(*it == std::pair(0, 2));
+    it.operator++();
+    CHECK(*it == std::pair(0, 3));
+    it.operator++();
+    CHECK(*it == std::pair(1, 2));
+    it.operator++();
+    CHECK(*it == std::pair(1, 3));
+    it.operator++();
+    CHECK(*it == std::pair(2, 3));
+}
+#endif
+#endif
+
 /**
  * Constant view to pairs in two containers
  * Calling `std::distance` is of O(N) complexity while `size` has constant complexity
