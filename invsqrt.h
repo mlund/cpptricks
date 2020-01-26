@@ -1,4 +1,5 @@
 #pragma once
+#include <type_traits>
 
 /**
  * @brief Fast inverse square-root approximation

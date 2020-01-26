@@ -17,4 +17,5 @@
 
 #include "pairwise_iterator.h"
 #include "invsqrt.h"
+#include "stl_eigen_facade.h"
 
